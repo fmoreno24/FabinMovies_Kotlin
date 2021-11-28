@@ -1,13 +1,16 @@
 package com.fmoreno.fabinmovies_kt.ui.fragments
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.util.Pair
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ProgressBar
 import android.widget.RelativeLayout
 import android.widget.Toast
+import androidx.core.app.ActivityOptionsCompat
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -20,6 +23,7 @@ import com.fmoreno.fabinmovies_kt.internet.ResponseInterface
 import com.fmoreno.fabinmovies_kt.internet.WebApiRequest
 import com.fmoreno.fabinmovies_kt.model.Movie
 import com.fmoreno.fabinmovies_kt.model.MovieResponse
+import com.fmoreno.fabinmovies_kt.ui.DetailMovieActivity
 import com.google.gson.Gson
 import java.util.ArrayList
 
@@ -228,11 +232,22 @@ class PopularFragment: Fragment(), ResponseInterface, OnItemClickListener {
 
     }
 
-    override fun onItemClick(movie: Movie?) {
-        Toast.makeText(
+    var movieDetail: Movie? = null
+    override fun onItemClick(movie: Movie?, mView: View) {
+        /*Toast.makeText(
             this.requireContext(),
             movie?.title,
             Toast.LENGTH_SHORT
-        ).show()
+        ).show()*/
+        movieDetail = movie
+        val datailActivity = Intent(context, DetailMovieActivity::class.java)
+        datailActivity.putExtra("movie", movieDetail)
+
+        val options = ActivityOptionsCompat.makeSceneTransitionAnimation(
+            this.requireActivity(), mView, "poster"
+        )
+
+        startActivity(datailActivity, options.toBundle())
+        this.requireActivity().overridePendingTransition(R.anim.zoom_forward_in, R.anim.zoom_forward_out)
     }
 }

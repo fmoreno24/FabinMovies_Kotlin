@@ -1,6 +1,8 @@
 package com.fmoreno.fabinmovies_kt.model
 
-class Movie {
+import java.io.Serializable
+
+class Movie: Serializable {
     var adult = false
     var backdrop_path: String? = null
     var genre_ids: List<Int>? = null

@@ -26,7 +26,7 @@ class RecyclerViewPopularAdapter(oItemClickListener: OnItemClickListener) : Recy
         val startAnimation = AnimationUtils.loadAnimation(holder.itemView.context, R.anim.slide_up)
 
         val movie: Movie = mMovies.get(position)
-        holder.post?.setOnClickListener { onItemClickListener!!.onItemClick(movie) }
+        holder.post?.setOnClickListener { onItemClickListener!!.onItemClick(movie, holder.post!!) }
         holder.bindLaunch(mMovies[position])
         holder.itemView.startAnimation(startAnimation)
     }

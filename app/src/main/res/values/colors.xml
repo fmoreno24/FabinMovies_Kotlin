@@ -8,6 +8,9 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
 
+    <color name="colorAccent">#01d277</color>
     <color name="colorPrimary">#014173</color>
     <color name="colorPrimaryDark">#091C24</color>
+    <color name="yellow">#D9CC23</color>
+    <color name="tabs_background">#014173</color>
 </resources>
