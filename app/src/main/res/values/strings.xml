@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">FabinMovies_KT</string>
+    <string name="tabPopular">Popular</string>
+    <string name="tabTopRated">Top Rated</string>
+</resources>
