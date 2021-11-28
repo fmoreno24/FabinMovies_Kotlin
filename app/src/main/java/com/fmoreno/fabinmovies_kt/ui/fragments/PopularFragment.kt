@@ -98,7 +98,7 @@ class PopularFragment: Fragment(), ResponseInterface, OnItemClickListener {
      */
     private fun initOperation(){
         try{
-            adapter = RecyclerViewPopularAdapter(mMovies, this)
+            adapter = RecyclerViewPopularAdapter(this)
 
 
 
@@ -174,10 +174,10 @@ class PopularFragment: Fragment(), ResponseInterface, OnItemClickListener {
             val count = movies?.results?.size
             //refMovies.setValue(movies)
             pageNumber++
-
-            addMoviesAll(movies?.results as List<Movie>)
+            adapter?.addMovies(movies?.results as MutableList<Movie>)
+            //addMoviesAll(movies?.results as List<Movie>)
             //saveData(users)
-            updateList(movies?.results as List<Movie>)
+            //updateList(movies?.results as List<Movie>)
             //progressBar?.setVisibility(View.GONE)
             if(count != null){
                 //include?.visibility = if (count > 0) View.GONE else View.VISIBLE
