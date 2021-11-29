@@ -26,7 +26,7 @@ class MainActivity : AppCompatActivity() {
         viewpager.adapter = object : FragmentStateAdapter(this) {
 
             override fun createFragment(position: Int): Fragment {
-                return TabsFragments.pagerFragments[position]
+                return TabsFragments.pagerFragments[position] as Fragment
             }
 
             override fun getItemCount(): Int {

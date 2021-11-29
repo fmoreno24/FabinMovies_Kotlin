@@ -3,24 +3,22 @@ package com.fmoreno.fabinmovies_kt.ui.fragments
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import android.util.Pair
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ProgressBar
 import android.widget.RelativeLayout
-import android.widget.Toast
 import androidx.core.app.ActivityOptionsCompat
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.android.volley.toolbox.Volley
 import com.fmoreno.fabinmovies_kt.R
 import com.fmoreno.fabinmovies_kt.adapter.OnItemClickListener
-import com.fmoreno.fabinmovies_kt.adapter.RecyclerViewPopularAdapter
+import com.fmoreno.fabinmovies_kt.adapter.RecyclerViewAdapter
 import com.fmoreno.fabinmovies_kt.internet.ResponseInterface
 import com.fmoreno.fabinmovies_kt.internet.WebApiRequest
+import com.fmoreno.fabinmovies_kt.model.DetailMovie
 import com.fmoreno.fabinmovies_kt.model.Movie
 import com.fmoreno.fabinmovies_kt.model.MovieResponse
 import com.fmoreno.fabinmovies_kt.ui.DetailMovieActivity
@@ -54,7 +52,7 @@ class PopularFragment: Fragment(), ResponseInterface, OnItemClickListener {
 
     private var gson: Gson? = null
 
-    private var adapter: RecyclerViewPopularAdapter? = null
+    private var adapter: RecyclerViewAdapter? = null
 
 
     var mMovies: MutableList<Movie> = listOf<Movie>().toMutableList()
@@ -102,18 +100,7 @@ class PopularFragment: Fragment(), ResponseInterface, OnItemClickListener {
      */
     private fun initOperation(){
         try{
-            adapter = RecyclerViewPopularAdapter(this)
-
-
-
-            /*iv_refresh = findViewById(R.id.iv_refresh)
-            iv_refresh?.setOnClickListener(){
-                getNeworkMovies()
-            }*/
-
-            //txtSearch = findViewById(R.id.textInputLayoutSearch)
-            //txtSearch?.getEditText()?.addTextChangedListener(this)
-
+            adapter = RecyclerViewAdapter(this)
             progressBar = ProgressBar(this.requireActivity(), null, android.R.attr.progressBarStyleLarge)
 
             val params = RelativeLayout.LayoutParams(100, 100)
@@ -175,34 +162,24 @@ class PopularFragment: Fragment(), ResponseInterface, OnItemClickListener {
 
     override fun getMoviesPopular(movies: MovieResponse?) {
         try{
-            val count = movies?.results?.size
-            //refMovies.setValue(movies)
             pageNumber++
             adapter?.addMovies(movies?.results as MutableList<Movie>)
-            //addMoviesAll(movies?.results as List<Movie>)
-            //saveData(users)
-            //updateList(movies?.results as List<Movie>)
-            //progressBar?.setVisibility(View.GONE)
-            if(count != null){
-                //include?.visibility = if (count > 0) View.GONE else View.VISIBLE
-                //txtSearch?.visibility = if (count > 0) View.VISIBLE else View.GONE
-            }
-
 
             Log.d("getMovies", movies.toString())
-            if (count != null) {
-                //txtSearch?.visibility = if (count > 0) View.VISIBLE else View.GONE
-                if(count <= 0){
-                    //include?.visibility = if (count > 0) View.GONE else View.VISIBLE
-                    //iv_refresh?.visibility = View.VISIBLE
-                }
-            }
         }catch (ex:Exception){
             Log.e("getMovies", ex.toString());
         }
     }
 
+    override fun getMoviesTopRated(movies: MovieResponse?) {
+        TODO("Not yet implemented")
+    }
+
     override fun getMoviesFail() {
+        TODO("Not yet implemented")
+    }
+
+    override fun getMovieDetails(movie: DetailMovie) {
         TODO("Not yet implemented")
     }
 
@@ -234,11 +211,6 @@ class PopularFragment: Fragment(), ResponseInterface, OnItemClickListener {
 
     var movieDetail: Movie? = null
     override fun onItemClick(movie: Movie?, mView: View) {
-        /*Toast.makeText(
-            this.requireContext(),
-            movie?.title,
-            Toast.LENGTH_SHORT
-        ).show()*/
         movieDetail = movie
         val datailActivity = Intent(context, DetailMovieActivity::class.java)
         datailActivity.putExtra("movie", movieDetail)

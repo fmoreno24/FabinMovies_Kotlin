@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.fmoreno.fabinmovies_kt.R
 import com.fmoreno.fabinmovies_kt.model.Movie
 
-class RecyclerViewPopularAdapter(oItemClickListener: OnItemClickListener) : RecyclerView.Adapter<MovieViewHolder>()  {
+class RecyclerViewAdapter(oItemClickListener: OnItemClickListener) : RecyclerView.Adapter<MovieViewHolder>()  {
     //private val mMovies: MutableList<Movie> = movies
     var mMovies: MutableList<Movie> = listOf<Movie>().toMutableList()
     private val onItemClickListener: OnItemClickListener? = oItemClickListener

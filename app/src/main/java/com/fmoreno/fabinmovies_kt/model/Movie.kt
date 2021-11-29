@@ -17,4 +17,22 @@ class Movie: Serializable {
     var video = false
     var vote_average = 0.0
     var vote_count = 0
+
+    fun getLikes(): String? {
+        return if (vote_count == 1) {
+            "1 Like"
+        } else if (vote_count > 1) {
+            vote_count.toString() + " Likes"
+        } else {
+            "No votes"
+        }
+    }
+
+    fun getStars(): String? {
+        return if (vote_average != null && vote_average > 0) {
+            vote_average.toString() + " / 10"
+        } else {
+            "No Reviews"
+        }
+    }
 }
