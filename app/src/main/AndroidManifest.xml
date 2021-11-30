@@ -25,6 +25,7 @@
             android:name=".ui.DetailMovieActivity"
             android:configChanges="screenSize|orientation"
             android:exported="true"/>
+
     </application>
 
 </manifest>

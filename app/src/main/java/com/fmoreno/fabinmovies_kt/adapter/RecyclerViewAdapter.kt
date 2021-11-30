@@ -6,14 +6,20 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
+import android.widget.Filter
+import android.widget.Filterable
 import androidx.recyclerview.widget.RecyclerView
 import com.fmoreno.fabinmovies_kt.R
 import com.fmoreno.fabinmovies_kt.model.Movie
+import java.util.ArrayList
 
-class RecyclerViewAdapter(oItemClickListener: OnItemClickListener) : RecyclerView.Adapter<MovieViewHolder>()  {
+class RecyclerViewAdapter(oItemClickListener: OnItemClickListener) : RecyclerView.Adapter<MovieViewHolder>(), Filterable  {
     //private val mMovies: MutableList<Movie> = movies
     var mMovies: MutableList<Movie> = listOf<Movie>().toMutableList()
+    var mFilteredMoviesList: MutableList<Movie> = listOf<Movie>().toMutableList()
+
     private val onItemClickListener: OnItemClickListener? = oItemClickListener
+    var mFilter: MovieFilter? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieViewHolder {
         val view: View = LayoutInflater.from(
@@ -33,6 +39,17 @@ class RecyclerViewAdapter(oItemClickListener: OnItemClickListener) : RecyclerVie
 
     override fun getItemCount(): Int {
         return mMovies.size
+    }
+
+    override fun getFilter(): Filter? {
+        if (mFilter == null) {
+            mFilteredMoviesList.clear()
+            mFilteredMoviesList.addAll(
+                this.mMovies
+            )
+            mFilter = MovieFilter(this, this.mFilteredMoviesList)
+        }
+        return mFilter
     }
 
     fun addMovies(movies: MutableList<Movie>) {

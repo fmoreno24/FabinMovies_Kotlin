@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ProgressBar
 import android.widget.RelativeLayout
+import androidx.appcompat.widget.SearchView
 import androidx.core.app.ActivityOptionsCompat
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
@@ -46,6 +47,7 @@ class PopularFragment: Fragment(), ResponseInterface, OnItemClickListener {
     private var progressBar: ProgressBar? = null
 
     private var rlMoviesList: RelativeLayout? = null
+    private var search_bar: SearchView? = null
     private var rv_popular: RecyclerView? = null
 
     private var include: View? = null
@@ -67,6 +69,7 @@ class PopularFragment: Fragment(), ResponseInterface, OnItemClickListener {
     ): View? {
         mRootView = inflater.inflate(R.layout.fragment_popular, container)
         rlMoviesList = mRootView?.findViewById(R.id.rlMoviesList)
+        search_bar = mRootView?.findViewById(R.id.search_bar)
         rv_popular = mRootView?.findViewById(R.id.rv_popular)
         initialObjects()
         initOperation()
@@ -140,6 +143,31 @@ class PopularFragment: Fragment(), ResponseInterface, OnItemClickListener {
                             loading = true
                         }
                     }
+                }
+            })
+
+            search_bar!!.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+                override fun onQueryTextSubmit(query: String): Boolean {
+                    adapter?.getFilter()?.filter(query)
+                    if (query.isEmpty()) {
+                        previousTotal = 0
+                        firstVisibleItem = 0
+                        visibleItemCount = 0
+                        totalItemCount = 0
+                    }
+                    return true
+                }
+
+                override fun onQueryTextChange(newText: String): Boolean {
+                    //filter(newText);
+                    adapter?.getFilter()?.filter(newText)
+                    if (newText.isEmpty()) {
+                        previousTotal = 0
+                        firstVisibleItem = 0
+                        visibleItemCount = 0
+                        totalItemCount = 0
+                    }
+                    return true
                 }
             })
         }catch (ex:Exception){

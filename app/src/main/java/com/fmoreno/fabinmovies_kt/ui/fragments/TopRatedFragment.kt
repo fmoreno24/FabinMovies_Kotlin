@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ProgressBar
 import android.widget.RelativeLayout
+import androidx.appcompat.widget.SearchView
 import androidx.core.app.ActivityOptionsCompat
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
@@ -45,6 +46,7 @@ class TopRatedFragment: Fragment(), ResponseInterface, OnItemClickListener {
     private var progressBar: ProgressBar? = null
 
     private var rlMoviesList: RelativeLayout? = null
+    private var search_bar: SearchView? = null
     private var rv_toprated: RecyclerView? = null
 
     private var include: View? = null
@@ -65,6 +67,7 @@ class TopRatedFragment: Fragment(), ResponseInterface, OnItemClickListener {
     ): View? {
         mRootView = inflater.inflate(R.layout.fragment_toprated, container)
         rlMoviesList = mRootView?.findViewById(R.id.rlMoviesList)
+        search_bar = mRootView?.findViewById(R.id.search_bar)
         rv_toprated = mRootView?.findViewById(R.id.rv_toprated)
         initialObjects()
         initOperation()
@@ -137,6 +140,30 @@ class TopRatedFragment: Fragment(), ResponseInterface, OnItemClickListener {
                             loading = true
                         }
                     }
+                }
+            })
+            search_bar!!.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+                override fun onQueryTextSubmit(query: String): Boolean {
+                    topRatedAdapter?.getFilter()?.filter(query)
+                    if (query.isEmpty()) {
+                        previousTotal = 0
+                        firstVisibleItem = 0
+                        visibleItemCount = 0
+                        totalItemCount = 0
+                    }
+                    return true
+                }
+
+                override fun onQueryTextChange(newText: String): Boolean {
+                    //filter(newText);
+                    topRatedAdapter?.getFilter()?.filter(newText)
+                    if (newText.isEmpty()) {
+                        previousTotal = 0
+                        firstVisibleItem = 0
+                        visibleItemCount = 0
+                        totalItemCount = 0
+                    }
+                    return true
                 }
             })
         }catch (ex:Exception){

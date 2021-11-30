@@ -2,6 +2,8 @@ package com.fmoreno.fabinmovies_kt.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.Menu
+import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
@@ -19,6 +21,23 @@ class MainActivity : AppCompatActivity() {
 
         renderViewPager()
         renderTabLayer()
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.menu, menu)
+        val search = menu.findItem(R.id.appSearchBar)
+        val searchView = search.actionView as SearchView
+        searchView.queryHint = "Search"
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                return false
+            }
+            override fun onQueryTextChange(newText: String?): Boolean {
+                //adapter.filter.filter(newText)
+                return true
+            }
+        })
+        return super.onCreateOptionsMenu(menu)
     }
 
     private fun renderViewPager() {
