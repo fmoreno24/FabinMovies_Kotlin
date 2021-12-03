@@ -2,4 +2,6 @@
     <string name="app_name">FabinMovies_KT</string>
     <string name="tabPopular">Popular</string>
     <string name="tabTopRated">Top Rated</string>
+    <string name="str_name">Fabián Moreno</string>
+    <string name="list_is_empty">List is empty</string>
 </resources>

@@ -24,8 +24,8 @@
                                             <option name="values">
                                               <map>
                                                 <entry key="color" value="000000" />
-                                                <entry key="imagePath" value="C:\Users\FABIAN~1\AppData\Local\Temp\baseline_search_24.xml" />
-                                                <entry key="opacityPercent" value="80" />
+                                                <entry key="imagePath" value="C:\Users\FABIAN~1\AppData\Local\Temp\baseline_refresh_24.xml" />
+                                                <entry key="opacityPercent" value="60" />
                                               </map>
                                             </option>
                                           </PersistentState>
@@ -36,7 +36,7 @@
                                           <PersistentState>
                                             <option name="values">
                                               <map>
-                                                <entry key="url" value="file:/C:/Users/Fabian%20Moreno/AppData/Local/Android/Sdk/icons/material/materialicons/search/baseline_search_24.xml" />
+                                                <entry key="url" value="file:/C:/Users/Fabian%20Moreno/AppData/Local/Android/Sdk/icons/material/materialicons/refresh/baseline_refresh_24.xml" />
                                               </map>
                                             </option>
                                           </PersistentState>
@@ -68,8 +68,7 @@
                                   </option>
                                   <option name="values">
                                     <map>
-                                      <entry key="outputName" value="ic_search" />
-                                      <entry key="theme" value="HOLO_DARK" />
+                                      <entry key="outputName" value="ic_action_refresh" />
                                     </map>
                                   </option>
                                 </PersistentState>

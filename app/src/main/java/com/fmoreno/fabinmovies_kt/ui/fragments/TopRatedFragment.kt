@@ -6,8 +6,10 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.RelativeLayout
+import android.widget.Toast
 import androidx.appcompat.widget.SearchView
 import androidx.core.app.ActivityOptionsCompat
 import androidx.fragment.app.Fragment
@@ -50,6 +52,7 @@ class TopRatedFragment: Fragment(), ResponseInterface, OnItemClickListener {
     private var rv_toprated: RecyclerView? = null
 
     private var include: View? = null
+    private var iv_refresh: ImageView? = null
 
     private var gson: Gson? = null
 
@@ -102,6 +105,15 @@ class TopRatedFragment: Fragment(), ResponseInterface, OnItemClickListener {
         try{
             topRatedAdapter = RecyclerViewAdapter(this)
             progressBar = ProgressBar(this.requireActivity(), null, android.R.attr.progressBarStyleLarge)
+
+            include = mRootView?.findViewById<View>(R.id.include)
+            include?.setVisibility(View.GONE)
+
+            iv_refresh = mRootView?.findViewById(R.id.iv_refresh)
+            iv_refresh?.setOnClickListener(){
+                iv_refresh?.visibility = View.GONE
+                getNeworkMovies()
+            }
 
             val params = RelativeLayout.LayoutParams(100, 100)
             params.addRule(RelativeLayout.CENTER_IN_PARENT)
@@ -190,6 +202,7 @@ class TopRatedFragment: Fragment(), ResponseInterface, OnItemClickListener {
 
     override fun getMoviesTopRated(movies: MovieResponse?) {
         try{
+            include?.visibility = if (topRatedAdapter?.mMovies?.size!! > 0) View.GONE else View.VISIBLE
             pageNumber++
             topRatedAdapter?.addMovies(movies?.results as MutableList<Movie>)
             Log.d("getMovies", movies.toString())
@@ -199,7 +212,10 @@ class TopRatedFragment: Fragment(), ResponseInterface, OnItemClickListener {
     }
 
     override fun getMoviesFail() {
-        TODO("Not yet implemented")
+        include?.visibility = if (topRatedAdapter?.mMovies?.size!! > 0) View.GONE else View.VISIBLE
+        iv_refresh?.visibility = View.VISIBLE
+        val toast = Toast.makeText(this.requireActivity(), "Error del servidor, intente nuevamente...", Toast.LENGTH_LONG)
+        toast.show()
     }
 
     override fun getMovieDetails(movie: DetailMovie) {

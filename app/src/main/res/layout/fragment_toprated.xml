@@ -29,5 +29,9 @@
             android:clipToPadding="false"
             android:padding="3dp"
             android:scrollbars="none"/>
+        <include
+            android:id="@+id/include"
+            layout="@layout/empty_view"
+            android:visibility="gone" />
     </LinearLayout>
 </RelativeLayout>

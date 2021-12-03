@@ -19,6 +19,7 @@ import com.fmoreno.fabinmovies_kt.model.DetailMovie
 import com.fmoreno.fabinmovies_kt.model.Movie
 import com.fmoreno.fabinmovies_kt.model.MovieResponse
 import com.fmoreno.fabinmovies_kt.utils.DateUtils
+import com.fmoreno.fabinmovies_kt.utils.ImageLoadingListener
 import kotlinx.android.synthetic.main.activity_detail_movie.*
 import java.util.ArrayList
 
@@ -64,24 +65,33 @@ class DetailMovieActivity: AppCompatActivity(), ResponseInterface {
     }
 
     private fun setImage() {
+        val progressView = findViewById<View>(R.id.moviePosterProgress).apply { visibility = View.VISIBLE }
+        val loadingListener = ImageLoadingListener(progressView)
+
         Glide.with(this)
             .load("http://image.tmdb.org/t/p/w500" + mMovie?.poster_path) //.load(moviesList.get(position).getPosterPath())
+            .error(R.drawable.ic_launcher_foreground)
+            .fallback(R.drawable.ic_launcher_foreground)
+            .listener(loadingListener)
             .into(imageViewPoster)
         Glide.with(this)
             .load("http://image.tmdb.org/t/p/w500" + mMovie?.backdrop_path) //.load(moviesList.get(position).getPosterPath())
+            .error(R.drawable.ic_launcher_foreground)
+            .fallback(R.drawable.ic_launcher_foreground)
+            .listener(loadingListener)
             .into(imageViewBanner)
     }
 
     override fun getMoviesPopular(movies: MovieResponse?) {
-        TODO("Not yet implemented")
+
     }
 
     override fun getMoviesTopRated(movies: MovieResponse?) {
-        TODO("Not yet implemented")
+
     }
 
     override fun getMoviesFail() {
-        TODO("Not yet implemented")
+        setTextOffline()
     }
     var sVideoList: MutableList<DetailMovie.Video> = listOf<DetailMovie.Video>().toMutableList()
 
@@ -114,27 +124,15 @@ class DetailMovieActivity: AppCompatActivity(), ResponseInterface {
                 label_trailers.visibility = View.GONE
             }
         }
-        /*if (isOnline) {
-            if (movieDetail != null) {
-                textViewTagline.setText(movieDetail.tagline)
-                if (DetailMovieActivity.sVideoList != null && DetailMovieActivity.sVideoList.size > 0) {
-                    //adapter.notifyDataSetChanged();
-                    label_trailers.visibility = View.VISIBLE
-                    adapter.addMovies(DetailMovieActivity.sVideoList)
-                } else {
-                    label_trailers.visibility = View.GONE
-                }
-            } else {
-                label_trailers.visibility = View.GONE
-            }
-        } else {
-            if (DetailMovieActivity.sVideoList != null && DetailMovieActivity.sVideoList.size > 0) {
-                label_trailers.visibility = View.VISIBLE
-            } else {
-                label_trailers.visibility = View.GONE
-            }
-            textViewTagline.setText(movie.getTagline())
-        }*/
+    }
+
+    private fun setTextOffline() {
+        textViewTitle.setText(mMovie?.title)
+        textViewVotes.setText(mMovie?.getLikes())
+        textViewStars.setText(mMovie?.getStars())
+        textViewDate.setText(DateUtils.getYear(mMovie?.release_date))
+        textViewDescription.setText(mMovie?.overview)
+        label_trailers.visibility = View.GONE
     }
 
     private fun setAnimation() {
